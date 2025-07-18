@@ -89,7 +89,7 @@ export default function ExampleScreen() {
 
 ## 🧠 Ref API
 
-# Access programmatically using ref={inputRef}
+### Access programmatically using ref={inputRef}
 
 ```bash
 type GooglePlacesAutocompleteRef = {
@@ -100,7 +100,7 @@ type GooglePlacesAutocompleteRef = {
   blur: () => void;
 };
 ```
-# Usage
+### Usage
 
 ```bash
 
@@ -108,4 +108,7 @@ ref.current?.setAddressText('Lagos, Nigeria');
 ref.current?.getAddressText(); // string
 ref.current?.focus();
 ref.current?.blur();
+```
+
+
 
