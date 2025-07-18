@@ -165,7 +165,7 @@ ref.current?.blur();
 | `onError`                  | `(error: any) => void`          | Called on request or component error                                     |
 | `styles`                   | `Partial<Styles>`               | Override component styles                                                |
 | `listViewDisplayed`        | `boolean`                       | Whether dropdown is shown                                                |
-| `enablePoweredByContainer` | `boolean`                       | Show/hide "powered by Google" (default: `false`)                         |
+
 
 ## 🔧 Ref Methods
 
