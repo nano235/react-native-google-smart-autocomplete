@@ -9,24 +9,22 @@ import {
 } from 'react-native';
 import useDebounce from '../hooks/useDebounce';
 import {
-  GooglePlaceData,
+  GoogleSmartPlaceData,
   GoogleSmartAutocompleteProps,
-  GooglePlacesAutocompleteRef,
+  GoogleSmartAutocompleteRef,
 } from '../types';
 
 function GoogleSmartAutocompleteInner(
   props: GoogleSmartAutocompleteProps,
-  ref: React.Ref<GooglePlacesAutocompleteRef>
+  ref: React.Ref<GoogleSmartAutocompleteRef>
 ) {
   const {
     predefinedPlaces = [],
     onPress,
     fetchPlaceDetails,
-    GooglePlacesDetailsQuery,
     apiKey,
     query = {},
     fetchDetails = false,
-    enablePoweredByContainer = false,
     placeholder = 'Search...',
     debounce = 300,
     listViewDisplayed = true,
@@ -45,7 +43,7 @@ function GoogleSmartAutocompleteInner(
   } = props;
 
   const [inputText, setInputText] = useState(value || '');
-  const [suggestions, setSuggestions] = useState<GooglePlaceData[]>([]);
+  const [suggestions, setSuggestions] = useState<GoogleSmartPlaceData[]>([]);
   const [loading, setLoading] = useState(false);
   const inputRef = useRef<TextInput>(null);
 
@@ -89,9 +87,9 @@ function GoogleSmartAutocompleteInner(
 
     setLoading(true);
     fetchSuggestions();
-  }, [debouncedValue, apiKey]);
+  }, [debouncedValue, apiKey, query]);
 
-  const handleInputChange = async (data: GooglePlaceData) => {
+  const handleInputChange = async (data: GoogleSmartPlaceData) => {
     let details;
     if (fetchDetails && fetchPlaceDetails) {
       details = await fetchPlaceDetails(data.place_id);
@@ -143,14 +141,12 @@ function GoogleSmartAutocompleteInner(
               const node = renderItem(item);
               return React.isValidElement(node) ? node : <Text>{String(node)}</Text>;
             }
-            // Default fallback
+            // Use DefaultRow as fallback
             return (
-              <TouchableOpacity
-                style={customStyles.row || styles.row}
+              <DefaultRow
+                data={item}
                 onPress={() => handleInputChange(item)}
-              >
-                <Text>{item.description}</Text>
-              </TouchableOpacity>
+              />
             );
           }}
           ListEmptyComponent={
@@ -159,7 +155,9 @@ function GoogleSmartAutocompleteInner(
                 ? renderEmptyComponent
                 : listEmptyComponent
                   ? () => <>{listEmptyComponent}</>
-                  : null
+                  : <View style={styles.listEmptyView}>
+                  <Text>No results were found</Text>
+                </View>
               : null
           }
           keyboardShouldPersistTaps="handled"
@@ -170,6 +168,98 @@ function GoogleSmartAutocompleteInner(
 }
 
 export const GoogleSmartAutoComplete = forwardRef(GoogleSmartAutocompleteInner);
+
+interface DefaultRowProps {
+	data: GoogleSmartPlaceData;
+	onPress: () => void;
+}
+
+const DefaultRow: React.FC<DefaultRowProps> = ({ data, onPress }) => {
+	if (!data.structured_formatting) {
+		return (
+			<TouchableOpacity style={styles.defaultRow} onPress={onPress}>
+				<Text
+					style={styles.placeText}
+					numberOfLines={1}
+					ellipsizeMode="tail"
+				>
+					{data.description || (data as any).name}
+				</Text>
+			</TouchableOpacity>
+		);
+	}
+
+	const { main_text, secondary_text } = data.structured_formatting;
+	const { matched_substrings } = data;
+
+	const highlightMainText = () => {
+		if (!matched_substrings?.length) {
+			return (
+				<Text
+					style={styles.placeText}
+					numberOfLines={1}
+					ellipsizeMode="tail"
+				>
+					{main_text}
+				</Text>
+			);
+		}
+
+		let parts = [];
+		let lastIndex = 0;
+
+		matched_substrings.forEach(match => {
+			const { offset, length } = match;
+
+			if (offset > lastIndex) {
+				parts.push(main_text.slice(lastIndex, offset));
+			}
+
+			parts.push(main_text.slice(offset, offset + length));
+			lastIndex = offset + length;
+		});
+
+		if (lastIndex < main_text.length) {
+			parts.push(main_text.slice(lastIndex));
+		}
+
+		return (
+			<Text style={styles.placeText} numberOfLines={1} ellipsizeMode="tail">
+				{parts.map((part, index) =>
+					matched_substrings.some(
+						match => match.offset === main_text.indexOf(part)
+					) ? (
+						<Text
+							key={index}
+							style={[styles.placeText, styles.highlight]}
+						>
+							{part}
+						</Text>
+					) : (
+						<Text key={index} style={styles.placeText}>
+							{part}
+						</Text>
+					)
+				)}
+			</Text>
+		);
+	};
+
+	return (
+		<TouchableOpacity
+			style={styles.defaultRow}
+			onPress={() => {
+				console.log("caalled......to");
+
+				onPress();
+			}}
+		>
+			{/* {highlightMatchText(data.description, query)} */}
+			{highlightMainText()}
+			<Text>{secondary_text}</Text>
+		</TouchableOpacity>
+	);
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -199,4 +289,25 @@ const styles = StyleSheet.create({
   row: {
     padding: 10,
   },
+  listEmptyView: {
+		flex: 1,
+		padding: 16,
+		minWidth: "100%",
+		maxWidth: "100%",
+	},
+  defaultRow: {
+		padding: 12,
+		borderBottomWidth: 1,
+		borderBottomColor: "#f0f0f0",
+		backgroundColor: "#ffffff",
+	},
+	placeText: {
+		fontSize: 14,
+		color: "#555",
+		fontWeight: "400",
+	},
+  highlight: {
+		color: "#564CD8",
+		fontWeight: "600",
+	},
 });

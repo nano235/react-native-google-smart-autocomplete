@@ -32,16 +32,16 @@ yarn add react-native-smart-google-autocomplete
 import React, { useRef } from 'react';
 import { View } from 'react-native';
 import {
-  GooglePlacesAutocomplete,
-  GooglePlacesAutocompleteRef
+  GoogleSmartAutoComplete,
+  GoogleSmartAutoCompleteRef
 } from 'react-native-smart-google-autocomplete';
 
 export default function ExampleScreen() {
-  const inputRef = useRef<GooglePlacesAutocompleteRef>(null);
+  const inputRef = useRef<GoogleSmartAutoCompleteRef>(null);
 
   return (
     <View style={{ padding: 16 }}>
-      <GooglePlacesAutocomplete
+      <GoogleSmartAutoComplete
         ref={inputRef}
         apiKey="YOUR_GOOGLE_MAPS_API_KEY"
         placeholder="Where to?"
@@ -73,7 +73,7 @@ export default function ExampleScreen() {
 ### Custom UI & Behavior Example
 
 ```tsx
-<GooglePlacesAutocomplete
+<GoogleSmartAutoComplete
   ref={inputRef}
   apiKey={GM_API_KEY}
   placeholder="Enter a location"
@@ -170,7 +170,7 @@ ref.current?.blur();
 ## 🔧 Ref Methods
 
 ```ts
-export interface GooglePlacesAutocompleteRef {
+export interface GoogleSmartAutoCompleteRef {
   setAddressText: (text: string) => void;
   getAddressText: () => string;
   getCurrentLocation: () => void;

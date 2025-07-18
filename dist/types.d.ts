@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ImageStyle, StyleProp, TextInputProps, TextStyle, ViewStyle } from 'react-native';
-export interface GooglePlaceDetail {
+export interface GoogleSmartPlaceDetail {
     address_components: any[];
     adr_address: string;
     formatted_address: string;
@@ -17,7 +17,7 @@ export interface GooglePlaceDetail {
     utc_offset: number;
     vicinity: string;
 }
-export interface GooglePlaceData {
+export interface GoogleSmartPlaceData {
     description: string;
     id: string;
     matched_substrings: any[];
@@ -39,19 +39,17 @@ export interface Styles {
     row: StyleProp<ViewStyle>;
 }
 export interface GoogleSmartAutocompleteProps {
-    predefinedPlaces?: GooglePlaceData[];
-    onPress: (data: GooglePlaceData, details?: GooglePlaceDetail) => void;
-    fetchPlaceDetails?: (placeId: string) => Promise<GooglePlaceDetail>;
-    GooglePlacesDetailsQuery?: Record<string, any>;
+    predefinedPlaces?: GoogleSmartPlaceData[];
+    onPress: (data: GoogleSmartPlaceData, details?: GoogleSmartPlaceDetail) => void;
+    fetchPlaceDetails?: (placeId: string) => Promise<GoogleSmartPlaceDetail>;
     apiKey: string;
     query?: Record<string, any>;
     fetchDetails?: boolean;
-    enablePoweredByContainer?: boolean;
     placeholder?: string;
     debounce?: number;
     listViewDisplayed?: boolean;
-    renderItem?: (item: GooglePlaceData) => React.ReactNode;
-    renderRow?: (item: GooglePlaceData) => React.ReactNode;
+    renderItem?: (item: GoogleSmartPlaceData) => React.ReactNode;
+    renderRow?: (item: GoogleSmartPlaceData) => React.ReactNode;
     renderLeftButton?: () => React.ReactNode;
     renderRightButton?: () => React.ReactNode;
     renderEmptyComponent?: () => React.ReactNode;
@@ -63,7 +61,7 @@ export interface GoogleSmartAutocompleteProps {
     onError?: (error: any) => void;
     styles?: Partial<Styles>;
 }
-export type GooglePlacesAutocompleteRef = {
+export type GoogleSmartAutocompleteRef = {
     setAddressText(address: string): void;
     getAddressText(): string;
     getCurrentLocation(): void;
