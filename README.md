@@ -183,4 +183,9 @@ export interface GooglePlacesAutocompleteRef {
 
 MIT License © 2025
 
+---
+
+Written by [Nano Adolor](https://x.com/nano_adolor)
+
+
 Crafted with 💡 for custom location inputs.
