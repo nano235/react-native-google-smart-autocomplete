@@ -296,7 +296,7 @@ const styles = StyleSheet.create({
 		maxWidth: "100%",
 	},
   defaultRow: {
-		padding: 12,
+		padding: 10,
 		borderBottomWidth: 1,
 		borderBottomColor: "#f0f0f0",
 		backgroundColor: "#ffffff",
