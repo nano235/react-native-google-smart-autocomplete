@@ -1,0 +1,60 @@
+{
+  "name": "react-native-google-smart-autocomplete",
+  "version": "1.0.0",
+  "description": "A highly customizable and seamless Google Places Autocomplete component for React Native",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "prepare": "npm run build",
+    "release": "release-it"
+  },
+  "keywords": [
+    "react-native",
+    "autocomplete",
+    "google-places",
+    "expo",
+    "autocomplete-input"
+  ],
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nano235/react-native-google-smart-autocomplete.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nano235/react-native-google-smart-autocomplete/issues"
+  },
+  "homepage": "https://nano235.github.io/react-native-google-smart-autocomplete",
+  "author": "Nano Revival Adolor",
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-native": ">=0.64.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.9",
+    "@testing-library/jest-native": "^5.4.3",
+    "@testing-library/react-native": "^12.1.5",
+    "@types/jest": "^29.5.2",
+    "@types/react": "^19.1.8",
+    "@types/react-native": "^0.73.0",
+    "jest": "^29.6.2",
+    "jest-environment-jsdom": "29",
+    "metro-react-native-babel-preset": "^0.77.0",
+    "react": "^19.1.0",
+    "react-native": "^0.80.1",
+    "react-test-renderer": "^18.2.0",
+    "release-it": "^15.11.0",
+    "strip-ansi": "5",
+    "strip-ansi-cjs": "^6",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "string-width": "4"
+  }
+}
