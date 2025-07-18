@@ -1,6 +1,6 @@
 {
   "name": "react-native-google-smart-autocomplete",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A highly customizable and seamless Google Places Autocomplete component for React Native",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -26,7 +26,7 @@
   "bugs": {
     "url": "https://github.com/nano235/react-native-google-smart-autocomplete/issues"
   },
-  "homepage": "https://nano235.github.io/react-native-google-smart-autocomplete",
+  "homepage": "https://github.com/nano235/react-native-google-smart-autocomplete",
   "author": "Nano Revival Adolor",
   "license": "MIT",
   "publishConfig": {
