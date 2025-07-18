@@ -249,12 +249,9 @@ const DefaultRow: React.FC<DefaultRowProps> = ({ data, onPress }) => {
 		<TouchableOpacity
 			style={styles.defaultRow}
 			onPress={() => {
-				console.log("caalled......to");
-
 				onPress();
 			}}
 		>
-			{/* {highlightMatchText(data.description, query)} */}
 			{highlightMainText()}
 			<Text>{secondary_text}</Text>
 		</TouchableOpacity>
