@@ -16,19 +16,25 @@ A customizable, lightweight Google Places Autocomplete input component for React
 
 ```bash
 npm install react-native-smart-google-autocomplete
+```
 
-# or
+or
 
+```bash
 yarn add react-native-smart-google-autocomplete
 ```
 
-## Usage
+## 📦 Usage
 
-```bash
+### Basic Example
 
+```tsx
 import React, { useRef } from 'react';
 import { View } from 'react-native';
-import { GooglePlacesAutocomplete, GooglePlacesAutocompleteRef } from 'react-native-smart-google-autocomplete';
+import {
+  GooglePlacesAutocomplete,
+  GooglePlacesAutocompleteRef
+} from 'react-native-smart-google-autocomplete';
 
 export default function ExampleScreen() {
   const inputRef = useRef<GooglePlacesAutocompleteRef>(null);
@@ -64,8 +70,77 @@ export default function ExampleScreen() {
 }
 ```
 
-## 📘 Props
+### Custom UI & Behavior Example
 
+```tsx
+<GooglePlacesAutocomplete
+  ref={inputRef}
+  apiKey={GM_API_KEY}
+  placeholder="Enter a location"
+  debounce={400}
+  fetchDetails={false}
+  query={{
+    language: 'en',
+    components: 'country:ng',
+  }}
+  onPress={(data, details) => {
+    console.log('Custom press handler', data, details);
+  }}
+  onTextChange={text => {
+    console.log('Text changed:', text);
+  }}
+  onFocus={() => console.log('Input focused')}
+  onError={err => console.error('Autocomplete error:', err)}
+  renderLeftButton={() => (
+    <TouchableOpacity onPress={() => console.log('Left button')}>Left</TouchableOpacity>
+  )}
+  renderRightButton={() => (
+    <TouchableOpacity onPress={() => inputRef.current?.setAddressText('')}>Clear</TouchableOpacity>
+  )}
+  renderRow={data => (
+    <TouchableOpacity onPress={() => handlePlaceSelect(data)}>
+      <Text>{data.description}</Text>
+    </TouchableOpacity>
+  )}
+  styles={{
+    textInputContainer: {
+      borderWidth: 1,
+      borderColor: '#ccc',
+      padding: 8,
+      borderRadius: 8,
+    },
+    textInput: {
+      fontSize: 16,
+      color: '#333',
+    },
+    listView: {
+      backgroundColor: '#fff',
+      borderTopWidth: 1,
+      borderColor: '#eee',
+    },
+    row: {
+      padding: 12,
+      borderBottomWidth: 1,
+      borderColor: '#eee',
+    },
+    separator: {
+      height: 1,
+      backgroundColor: '#f0f0f0',
+    },
+  }}
+/>
+```
+
+## 🧠 Imperative Methods
+
+```tsx
+ref.current?.setAddressText('Lagos, Nigeria');
+ref.current?.getAddressText(); // string
+ref.current?.focus();
+ref.current?.blur();
+```
+
+## 📘 Props Table
 
 | Prop                       | Type                            | Description                                                              |
 | -------------------------- | ------------------------------- | ------------------------------------------------------------------------ |
@@ -81,34 +156,31 @@ export default function ExampleScreen() {
 | `renderRightButton`        | `() => ReactNode`               | Custom right icon/button                                                 |
 | `renderItem`               | `(item) => ReactNode`           | Custom render function for each suggestion                               |
 | `renderRow`                | `(item) => ReactNode`           | Full row customization                                                   |
-| `textInputProps`           | `TextInputProps`                | Pass additional props to the TextInput                                   |
-| `styles`                   | `object`                        | Override styles: container, listView, input, etc.                        |
-| `listViewDisplayed`        | `boolean`                       | Show/hide dropdown suggestions (default: `true`)                         |
+| `renderEmptyComponent`     | `() => ReactNode`               | Custom empty result component                                            |
+| `listEmptyComponent`       | `ReactNode`                     | JSX element to show when list is empty                                   |
+| `textInputProps`           | `TextInputProps`                | Props to pass into the underlying `TextInput`                            |
+| `value`                    | `string`                        | Controlled input value                                                   |
+| `onFocus`                  | `() => void`                    | Called when input is focused                                             |
+| `onTextChange`             | `(text: string) => void`        | Called when input text changes                                           |
+| `onError`                  | `(error: any) => void`          | Called on request or component error                                     |
+| `styles`                   | `Partial<Styles>`               | Override component styles                                                |
+| `listViewDisplayed`        | `boolean`                       | Whether dropdown is shown                                                |
 | `enablePoweredByContainer` | `boolean`                       | Show/hide "powered by Google" (default: `false`)                         |
 
+## 🔧 Ref Methods
 
-## 🧠 Ref API
-
-### Access programmatically using ref={inputRef}
-
-```bash
-type GooglePlacesAutocompleteRef = {
+```ts
+export interface GooglePlacesAutocompleteRef {
   setAddressText: (text: string) => void;
   getAddressText: () => string;
   getCurrentLocation: () => void;
   focus: () => void;
   blur: () => void;
-};
-```
-### Usage
-
-```bash
-
-ref.current?.setAddressText('Lagos, Nigeria');
-ref.current?.getAddressText(); // string
-ref.current?.focus();
-ref.current?.blur();
+}
 ```
 
+---
 
+MIT License © 2025
 
+Crafted with 💡 for custom location inputs.
