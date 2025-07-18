@@ -7,7 +7,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-// src/components/GoogleSmartAutocomplete.tsx
 import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import { View, TextInput, FlatList, TouchableOpacity, Text, StyleSheet, } from 'react-native';
 import useDebounce from '../hooks/useDebounce';

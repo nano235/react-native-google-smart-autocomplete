@@ -20,8 +20,11 @@ npm install react-native-smart-google-autocomplete
 # or
 
 yarn add react-native-smart-google-autocomplete
+```
 
+## Usage
 
+```bash
 
 import React, { useRef } from 'react';
 import { View } from 'react-native';
@@ -59,6 +62,9 @@ export default function ExampleScreen() {
     </View>
   );
 }
+```
+
+## 📘 Props
 
 
 | Prop                       | Type                            | Description                                                              |
@@ -81,16 +87,25 @@ export default function ExampleScreen() {
 | `enablePoweredByContainer` | `boolean`                       | Show/hide "powered by Google" (default: `false`)                         |
 
 
-ref.current?.setAddressText('Lagos, Nigeria');
-ref.current?.getAddressText(); // string
-ref.current?.focus();
-ref.current?.blur();
+## 🧠 Ref API
 
+# Access programmatically using ref={inputRef}
 
+```bash
 type GooglePlacesAutocompleteRef = {
   setAddressText: (text: string) => void;
   getAddressText: () => string;
   getCurrentLocation: () => void;
   focus: () => void;
   blur: () => void;
-}
+};
+```
+# Usage
+
+```bash
+
+ref.current?.setAddressText('Lagos, Nigeria');
+ref.current?.getAddressText(); // string
+ref.current?.focus();
+ref.current?.blur();
+
